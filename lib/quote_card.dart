@@ -4,8 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class QuoteCard extends StatefulWidget {
   final Quote quote;
+  final VoidCallback delete;
 
-  QuoteCard({required this.quote});
+  QuoteCard({required this.quote, required this.delete});
 
   @override
   _QuoteCardState createState() => _QuoteCardState();
@@ -65,6 +66,40 @@ class _QuoteCardState extends State<QuoteCard> {
                 fontSize: 12.0,
                 color: Colors.cyan,
               ),
+            ),
+            Text(
+              "Created at: ${widget.quote.createdAt.toLocal().toString().split(
+                  '.')[0]}",
+              style: TextStyle(fontSize: 12.0, color: Colors.grey[500]),
+            ),
+            TextButton.icon(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Delete Quote'),
+                      content: Text('Are you sure?'),
+                      actions: [
+                        TextButton(
+                          child: Text('Cancel'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        TextButton(
+                          child: Text('Delete'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              label: Text('Delete Quote'),
+              icon: Icon(Icons.delete),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

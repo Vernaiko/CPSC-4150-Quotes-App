@@ -19,17 +19,19 @@ class _QuoteListState extends State<QuoteList> {
         text: '. . . there is some good in this world, and it is'
         ' worth fighting for.',
         category: 'Fiction', sourceMaterial: 'The Lord of the Rings: The Two Towers',
-        character: 'Samwise Gamgee'),
+        character: 'Samwise Gamgee', createdAt: DateTime.now()),
     Quote(author: 'Pat Conroy', text: 'The White Porpoise comes to me at night. Singing'
         ' in the river of time with a thousand dolphins in radiant attendance, bringing'
         ' charismatic greetings from The Prince of Tides.',
         category: 'Fiction', sourceMaterial: 'The Prince of Tides',
-        character: 'Savannah Wingo'),
-    Quote(author: 'Pat Conroy', text: 'He had returned to the sea. . . and his heart'
-        ' was a lowcountry heart.',
-        category: 'Fiction', sourceMaterial: 'The Prince of Tides',
-        character: 'Tom Wingo')
+        character: 'Savannah Wingo', createdAt: DateTime.now()),
   ];
+
+  void deleteQuote(Quote quote) {
+    setState(() {
+      quotes.remove(quote);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,10 @@ class _QuoteListState extends State<QuoteList> {
         backgroundColor: Colors.cyanAccent
       ),
       body: Column(
-        children: quotes.map((quote) => QuoteCard(quote: quote)).toList(),
+        children: quotes.map((quote) => QuoteCard(
+          quote: quote,
+          delete: () => deleteQuote(quote),
+        )).toList(),
       ),
     );
   }
